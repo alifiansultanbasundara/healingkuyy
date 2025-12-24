@@ -1,0 +1,49 @@
+# HealingKuy!.id - Simplified .htaccess
+
+# Enable rewrite engine
+RewriteEngine On
+
+# Security: Block access to sensitive files
+<FilesMatch "\.(env|log|ini|config|sql|bak|backup)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+<Files "(.htaccess|.htpasswd)">
+    Order allow,deny
+    Deny from all
+</Files>
+
+# Prevent directory listing
+Options -Indexes
+
+# Custom error pages (pastikan file error.php ada)
+ErrorDocument 400 /error.php?code=400
+ErrorDocument 401 /error.php?code=401
+ErrorDocument 403 /error.php?code=403
+ErrorDocument 404 /error.php?code=404
+ErrorDocument 500 /error.php?code=500
+
+# URL Rewriting for clean URLs
+# Admin routes
+RewriteRule ^admin/login$ admin/login.php [L]
+RewriteRule ^admin/dashboard$ admin/dashboard.php [L]
+RewriteRule ^admin/users$ admin/users.php [L]
+RewriteRule ^admin/services$ admin/services.php [L]
+RewriteRule ^admin/reservations$ admin/reservations.php [L]
+RewriteRule ^admin/cancellations$ admin/cancellations.php [L]
+RewriteRule ^admin/blog$ admin/blog.php [L]
+RewriteRule ^admin/reports$ admin/reports.php [L]
+
+# User routes
+RewriteRule ^login$ login.php [L]
+RewriteRule ^register$ register.php [L]
+RewriteRule ^dashboard$ user/dashboard.php [L]
+RewriteRule ^reservasi$ user/reservation.php [L]
+RewriteRule ^reservasi/([0-9]+)$ user/reservation_detail.php?id=$1 [L]
+RewriteRule ^checkin$ user/checkin.php [L]
+RewriteRule ^pembatalan$ user/cancellation.php [L]
+RewriteRule ^blog$ user/blog.php [L]
+RewriteRule ^blog/([0-9]+)$ user/blog_detail.php?id=$1 [L]
+RewriteRule ^infografis$ user/infographic.php [L]
+RewriteRule ^profil$ user/profile.php [L]
